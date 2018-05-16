@@ -8,7 +8,7 @@ date: "`r Sys.Date()`"
 #Load Library 'dplyr' and 'readxl'
 library(readxl)
 library(dplyr)
-
+library(tidyr)
 
 # 1. Read in Vemco Tagsheet  
 input <- read_excel("Data/TagSheet_PC4C_Erwin.xls", sheet=2)
@@ -68,12 +68,17 @@ selection <- selection %>%
 
 #c. Add columns
 
-manufacturer = vemco
-acousticTagType = animal
-type = acoustic
-idCode --> split from tagcodespace
-thelmaConvertedCode	--> not to do here?
-frequency --> split from tag.family
+selection$manufacturer <- "vemco"
+selection$acousticTagType <- "animal"
+selection$type <- "acoustic"
+selection <- selection %>%
+  separate(tagCodeSpace, c("Code", "Code2", "idCode"), "-", remove = F) %>%
+  select(-Code, -Code2) #added idCode
+selection$thelmaConvertedCode	<- NA
+selection %>%
+  separate(model, c("rm", "rm2", "frequency", "rm3", "rm4"), "-", remove = F) %>%
+  select(-rm, -rm2, -rm3, -rm4) #added frequency
+
 
 # d. Rename specific arguments to match ETN
 
