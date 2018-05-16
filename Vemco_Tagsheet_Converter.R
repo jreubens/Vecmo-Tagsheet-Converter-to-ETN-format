@@ -6,6 +6,7 @@ date: "`r Sys.Date()`"
 
 
 #Load Library 'dplyr' and 'readxl'
+library(plyr)
 library(readxl)
 library(dplyr)
 library(tidyr)
@@ -82,7 +83,7 @@ selection %>%
 
 # d. Rename specific arguments to match ETN
 
-plyr::revalue(selection$ownerGroup, "WAGENINGEN UR MARINE RESEARCH"="IMARES")
+selection$ownerGroup <-  plyr::revalue(selection$ownerGroup, c("WAGENINGEN UR MARINE RESEARCH"="IMARES"))
 
 # 3. Save .csv output file for import in ETN
 write.csv(my_projects, file = "Overview_projects.csv")
