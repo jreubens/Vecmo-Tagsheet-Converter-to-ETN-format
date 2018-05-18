@@ -1,7 +1,7 @@
 ---
 Title: "Vecmo Tagsheet Converter to ETN format"
-author: "JAn Reubens"
-date: "`r Sys.Date()`"
+authors: "JAn Reubens, Jolien Goossens"
+date: `r Sys.Date()`
 ---
 
 
@@ -14,7 +14,7 @@ library(tidyr)
 # 1. Read in Vemco Tagsheet  
 input <- read_excel("Data/TagSheet_PC4C_Erwin.xls", sheet=2)
 write.csv(input, file = "Data/TagSheet_PC4C_ERwin.csv")
-input <- read.csv2("Data/TagSheet_PC4C_Erwin.csv", sep=",")
+input <- read.csv2("Data/TagSheet_PC4C_Erwin.csv",sep=",")
 summary(input)
 head(input)
 names(input)
@@ -76,14 +76,22 @@ selection <- selection %>%
   separate(tagCodeSpace, c("Code", "Code2", "idCode"), "-", remove = F) %>%
   select(-Code, -Code2) #added idCode
 selection$thelmaConvertedCode	<- NA
-selection %>%
-  separate(model, c("rm", "rm2", "frequency", "rm3", "rm4"), "-", remove = F) %>%
-  select(-rm, -rm2, -rm3, -rm4) #added frequency
+selection <- selection %>%
+  separate(model, c("model1", "model2", "frequency", "rm1", "rm2"), "-", remove = T) %>%
+  select(-rm1, -rm2) #added frequency
+selection <- selection %>%  
+  unite(model, model1, model2, sep ="-", remove =T) # united model1 and 2 to correct format
+ 
 
 
 # d. Rename specific arguments to match ETN
+# Typical fields that need to be updated:
+# - ownergroup
+# - ownerPI
 
 selection$ownerGroup <-  plyr::revalue(selection$ownerGroup, c("WAGENINGEN UR MARINE RESEARCH"="IMARES"))
+selection$ownerPi <-  plyr::revalue(selection$ownerPi, c("Jan Reubens"="Erwin Winter"))
+
 
 # 3. Save .csv output file for import in ETN
-write.csv(my_projects, file = "Overview_projects.csv")
+write.csv(selection, file = "Export/tag_import_ETN.csv")
