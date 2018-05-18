@@ -4,8 +4,6 @@ When a customer orders Vemco tags, you'll get a xlsx. file with the tag specific
 Users of the European Tracking Network (ETN) http://www.lifewatch.be/etn/ need this information to upload the tag metadata in central database of ETN. 
 With this R-script you convert the Vemco tagsheet to the correct format for input in ETN.
 Steps to take:
-1. Convert your .xlsx file to .csv
-2. Upload the file to your Rstudio
-3. Run this script
-4. Upload the output on http://www.lifewatch.be/etn/dataimport
-
+1. Upload the file to your Rstudio
+2. Create an R.project and run this script
+3. Upload the output on http://www.lifewatch.be/etn/dataimport
