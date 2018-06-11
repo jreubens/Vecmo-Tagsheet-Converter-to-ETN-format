@@ -41,31 +41,31 @@ selection <- selection %>%
          durationStep1 = Step.1.Time......dy.hr.min.sec.,
          maxDelayStep1 = Step.1.Max.Delay..sec.,
          minDelayStep1 = Step.1.Min.Delay..sec., 
-         acceleration_on_sec_step1 = Step.1.Acc..On..sec.,
+         accelerationOnSecStep1 = Step.1.Acc..On..sec.,
          powerStep1	= Step.1.Power..L.H.,
          durationStep2 = Step.2.Time........dy.hr.min.sec.,
          maxDelayStep2 = Step.2.Max.Delay..sec.,	
          minDelayStep2 = Step.2.Min.Delay..sec.,
-         acceleration_on_sec_step2 = Step.2.Acc..On..sec.,
+         accelerationOnSecStep2 = Step.2.Acc..On..sec.,
          powerStep2	= Step.2.Power..L.H.,
          durationStep3	= Step.3.Time........dy.hr.min.sec.,
          maxDelayStep3	= Step.3.Max.Delay..sec.,
          minDelayStep3	= Step.3.Min.Delay..sec.,
-         acceleration_on_sec_step3 = Step.3.Acc..On..sec.,
+         accelerationOnSecStep3 = Step.3.Acc..On..sec.,
          powerStep3 = Step.3.Power..L.H.,
          durationStep4 = Step.4.Time..........dy.hr.min.sec.,
          maxDelayStep4= Step.4.Max.Delay..sec.,
          minDelayStep4 = Step.4.Min.Delay..sec.,
-         acceleration_on_sec_step4 = Step.4.Acc..On..sec.,
+         accelerationOnSecStep4 = Step.4.Acc..On..sec.,
          powerStep4	= Step.4.Power..L.H.,
          intercept	= Intercept,
          slope	= Slope,
          ownerPi	= Researcher,
          range = Range,
          units = Units,
-         accelerometer_algoritm = Accelerometer.Algorithm,
-         accelerometer_samples_per_sec = Accelerometer.Samples...sec.,
-         sensor_transmit_ratio = Sensor.Transmit.Ratio)
+         accelerometerAlgoritm = Accelerometer.Algorithm,
+         accelerometerSamplesPerSecond = Accelerometer.Samples...sec.,
+         sensorTransmitRatio = Sensor.Transmit.Ratio)
 
 #c. Add columns
 
@@ -94,4 +94,4 @@ selection$ownerPi <-  plyr::revalue(selection$ownerPi, c("Jan Reubens"="Erwin Wi
 
 
 # 3. Save .csv output file for import in ETN
-write.csv(selection, file = "Export/tag_import_ETN.csv")
+write.csv(selection, file = "Export/tag_import_ETN.csv", row.names = F, na = "")
