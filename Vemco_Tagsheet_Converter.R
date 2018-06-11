@@ -94,4 +94,4 @@ selection$ownerPi <-  plyr::revalue(selection$ownerPi, c("Jan Reubens"="Erwin Wi
 
 
 # 3. Save .csv output file for import in ETN
-write.csv(selection, file = "Export/tag_import_ETN.csv")
+write.csv(selection, file = "Export/tag_import_ETN.csv", row.names = F)
