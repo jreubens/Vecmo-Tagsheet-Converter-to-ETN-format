@@ -81,8 +81,18 @@ selection <- selection %>%
   select(-rm1, -rm2) #added frequency
 selection <- selection %>%  
   unite(model, model1, model2, sep ="-", remove =T) # united model1 and 2 to correct format
- 
-
+selection <- selection %>%
+  separate(durationStep1, c("durationStep1", "HMS_Step1"), " ", remove = T) %>%
+  select(-HMS) #changed to days 
+selection <- selection %>%
+  separate(durationStep2, c("durationStep2", "HMS_Step2"), " ", remove = T) %>%
+  select(-HMS_Step2) #changed to days 
+selection <- selection %>%
+  separate(durationStep3, c("durationStep3", "HMS_Step3"), " ", remove = T) %>%
+  select(-HMS_Step3) #changed to days 
+selection <- selection %>%
+  separate(durationStep4, c("durationStep4", "HMS_Step4"), " ", remove = T) %>%
+  select(-HMS_Step4) #changed to days 
 
 # d. Rename specific arguments to match ETN
 # Typical fields that need to be updated:
