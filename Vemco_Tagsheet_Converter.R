@@ -12,9 +12,9 @@ library(dplyr)
 library(tidyr)
 
 # 1. Read in Vemco Tagsheet  
-input <- read_excel("Data/TagSheet_PC4C_Erwin.xls", sheet=2)
-write.csv(input, file = "Data/TagSheet_PC4C_ERwin.csv")
-input <- read.csv2("Data/TagSheet_PC4C_Erwin.csv",sep=",")
+input <- read_excel("Data/TagSheet_PC4C_Jan.xls", sheet=2)
+write.csv(input, file = "Data/TagSheet_PC4C_Jan.csv")
+input <- read.csv2("Data/TagSheet_PC4C_Jan.csv",sep=",")
 summary(input)
 head(input)
 names(input)
@@ -89,9 +89,9 @@ selection <- selection %>%
 # - ownergroup
 # - ownerPI
 
-selection$ownerGroup <-  plyr::revalue(selection$ownerGroup, c("WAGENINGEN UR MARINE RESEARCH"="IMARES"))
-selection$ownerPi <-  plyr::revalue(selection$ownerPi, c("Jan Reubens"="Erwin Winter"))
+selection$ownerGroup <-  plyr::revalue(selection$ownerGroup, c("VLAAMS INSTITUUT VOOR DE ZEE"="VLIZ"))
+#selection$ownerPi <-  plyr::revalue(selection$ownerPi, c("Jan Reubens"="Erwin Winter"))
 
 
 # 3. Save .csv output file for import in ETN
-write.csv(selection, file = "Export/tag_import_ETN.csv", row.names = F, na = "")
+write.csv(selection, file = "Export/tag_import_ETN_janR.csv", row.names = F, na = "")
