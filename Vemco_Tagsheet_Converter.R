@@ -34,7 +34,7 @@ selection <- select(input, Serial.No.,Customer, Researcher, Tag.Family, VUE.Tag.
 selection <- selection %>%
   rename(serialNumber = Serial.No.,
          ownerGroup = Customer,
-         tagCodeSpace = VUE.Tag.ID,
+         tagfullID = VUE.Tag.ID,
          model = Tag.Family,
          sensorType	= Sensor.type,
          estimatedLifetime	= Est.tag.life..days.,
@@ -67,14 +67,19 @@ selection <- selection %>%
          accelerometerSamplesPerSecond = Accelerometer.Samples...sec.,
          sensorTransmitRatio = Sensor.Transmit.Ratio)
 
-#c. Add columns
+#c. Add and adapt columns
+
+selection$endDate <- NA
+selection$status <- NA
 
 selection$manufacturer <- "vemco"
 selection$acousticTagType <- "animal"
 selection$type <- "acoustic"
 selection <- selection %>%
-  separate(tagCodeSpace, c("Code", "Code2", "idCode"), "-", remove = F) %>%
-  select(-Code, -Code2) #added idCode
+  separate(tagfullID, c("tagcodespace1", "tagcodespace2", "idCode"), "-", remove = F)  #added tagcodespace, idCode
+selection$tagCodeSpace <- paste(selection$tagcodespace1,selection$tagcodespace2, sep = "-")
+selection <- selection %>%
+  select(-tagfullID, -tagcodespace1, -tagcodespace2)
 selection$thelmaConvertedCode	<- NA
 selection <- selection %>%
   separate(model, c("model1", "model2", "frequency", "rm1", "rm2"), "-", remove = T) %>%
@@ -83,7 +88,7 @@ selection <- selection %>%
   unite(model, model1, model2, sep ="-", remove =T) # united model1 and 2 to correct format
 selection <- selection %>%
   separate(durationStep1, c("durationStep1", "HMS_Step1"), " ", remove = T) %>%
-  select(-HMS) #changed to days 
+  select(-HMS_Step1) #changed to days 
 selection <- selection %>%
   separate(durationStep2, c("durationStep2", "HMS_Step2"), " ", remove = T) %>%
   select(-HMS_Step2) #changed to days 
@@ -100,8 +105,11 @@ selection <- selection %>%
 # - ownerPI
 
 selection$ownerGroup <-  plyr::revalue(selection$ownerGroup, c("VLAAMS INSTITUUT VOOR DE ZEE"="VLIZ"))
+selection$units<-  plyr::revalue(selection$units, c("Meters"="m"))
+
 #selection$ownerPi <-  plyr::revalue(selection$ownerPi, c("Jan Reubens"="Erwin Winter"))
 
 
 # 3. Save .csv output file for import in ETN
 write.csv(selection, file = "Export/tag_import_ETN_janR.csv", row.names = F, na = "")
+
