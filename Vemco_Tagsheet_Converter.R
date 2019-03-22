@@ -12,9 +12,9 @@ library(dplyr)
 library(tidyr)
 
 # 1. Read in Vemco Tagsheet  
-input <- read_excel("Data/TagSheet_PC4C_Jan.xls", sheet=2)
-write.csv(input, file = "Data/TagSheet_PC4C_Jan.csv")
-input <- read.csv2("Data/TagSheet_PC4C_Jan.csv",sep=",")
+input <- read_excel("Data/Dainys_TagSheet_17185.xls", sheet=2)
+write.csv(input, file = "Data/Dainys_TagSheet_17185.csv")
+input <- read.csv2("Data/Lalic_TagSheet_16107.csv",sep=",")
 summary(input)
 head(input)
 names(input)
@@ -104,12 +104,12 @@ selection <- selection %>%
 # - ownergroup
 # - ownerPI
 
-selection$ownerGroup <-  plyr::revalue(selection$ownerGroup, c("VLAAMS INSTITUUT VOOR DE ZEE"="VLIZ"))
+selection$ownerGroup <-  revalue(selection$ownerGroup, c("DANUBE DELTA NATIONAL INST."="DDNI"))
 selection$units<-  plyr::revalue(selection$units, c("Meters"="m"))
 
-#selection$ownerPi <-  plyr::revalue(selection$ownerPi, c("Jan Reubens"="Erwin Winter"))
+selection$ownerPi <-  plyr::revalue(selection$ownerPi, c("RADU SUCIU"="Radu Suciu"))
 
 
 # 3. Save .csv output file for import in ETN
-write.csv(selection, file = "Export/tag_import_ETN_janR.csv", row.names = F, na = "")
+write.csv(selection, file = "Export/tag_import_ETN_Lalic_TagSheet_16107.csv", row.names = F, na = "")
 
